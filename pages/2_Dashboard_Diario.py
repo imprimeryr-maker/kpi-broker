@@ -8,7 +8,7 @@ from datetime import date
 from storage import load_carga_diaria, load_metas
 from utils import (
     tasa_a_porcentaje, formatear_pesos, formatear_uf,
-    generar_diagnostico, generar_plan_accion
+    generar_diagnostico, generar_plan_accion, render_ad_banner
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -188,3 +188,6 @@ else:
 if e.get("observaciones"):
     with st.expander("📝 Ver observaciones"):
         st.write(e["observaciones"])
+
+# ─── Ad Banner ────────────────────────────────────────────────────────────
+render_ad_banner()

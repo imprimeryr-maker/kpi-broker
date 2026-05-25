@@ -9,7 +9,7 @@ from storage import load_carga_diaria, add_entry, delete_entry, load_metas
 from utils import (
     get_dia_semana, get_semana_numero, calcular_tasas,
     calcular_ingreso, generar_diagnostico, generar_plan_accion,
-    formatear_numero, tasa_a_porcentaje
+    formatear_numero, tasa_a_porcentaje, render_ad_banner
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -221,3 +221,6 @@ with tab2:
                         if st.button(f"❌ Cancelar", key=f"confirm_no_{fecha_e}"):
                             st.session_state[f"confirm_del_{fecha_e}"] = False
                             st.rerun()
+
+# ─── Ad Banner ────────────────────────────────────────────────────────────
+render_ad_banner()

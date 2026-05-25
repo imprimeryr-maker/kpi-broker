@@ -7,7 +7,7 @@ import streamlit as st
 from storage import load_carga_diaria, load_metas
 from utils import (
     agregar_semanal, tasa_a_porcentaje, formatear_pesos,
-    formatear_uf
+    formatear_uf, render_ad_banner
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -178,3 +178,6 @@ for w in weekly_reversed:
             st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(w.get('tasa_agendamiento', 0))}")
             st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(w.get('tasa_cierre', 0))}")
             st.markdown(f"**💵 Ingreso:** ${w.get('ingreso_bruto', 0):,.0f}")
+
+# ─── Ad Banner ────────────────────────────────────────────────────────────
+render_ad_banner()

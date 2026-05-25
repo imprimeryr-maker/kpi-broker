@@ -6,7 +6,8 @@ Agregación mensual con tendencias y comparativas
 import streamlit as st
 from storage import load_carga_diaria, load_metas
 from utils import (
-    agregar_mensual, tasa_a_porcentaje, formatear_pesos, formatear_uf
+    agregar_mensual, tasa_a_porcentaje, formatear_pesos, formatear_uf,
+    render_ad_banner
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -194,3 +195,6 @@ for m in monthly_reversed:
             st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(m.get('tasa_agendamiento', 0))}")
             st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(m.get('tasa_cierre', 0))}")
             st.markdown(f"**💵 Ingreso:** ${m.get('ingreso_bruto', 0):,.0f}")
+
+# ─── Ad Banner ────────────────────────────────────────────────────────────
+render_ad_banner()
