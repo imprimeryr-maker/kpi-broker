@@ -1,0 +1,25 @@
+[
+  {
+    "fecha": "2026-05-25",
+    "semana": "Sem 22",
+    "dia": "Lunes",
+    "leads_nuevos": 100,
+    "llamadas": 20,
+    "contactos": 5,
+    "agendas": 2,
+    "reuniones": 1,
+    "reservas": 0,
+    "ventas": 0,
+    "uf_vendidas": 0.0,
+    "observaciones": "",
+    "accion_correctiva": "",
+    "tasa_contacto": 0.25,
+    "tasa_agendamiento": 0.4,
+    "tasa_show": 0.5,
+    "tasa_reserva": 0.0,
+    "tasa_cierre": 0.0,
+    "ingreso_bruto": 0.0,
+    "diagnostico": "\ud83d\udd34 Desempe\u00f1o cr\u00edtico \u2014 se requieren acciones correctivas urgentes\n\u26a0\ufe0f Tasa de Contacto: 25.0% vs 50% (50% bajo meta)\n\u26a0\ufe0f Tasa de Reserva: 0.0% vs 70% (100% bajo meta)\n\u26a0\ufe0f Tasa de Cierre: 0.0% vs 70% (100% bajo meta)",
+    "plan_accion": "\ud83d\udccb Acciones sugeridas:\n\u2022 Mejorar gui\u00f3n de llamadas y capacitar en t\u00e9cnicas de apertura\n\u2022 Mejorar seguimiento post-reuni\u00f3n y ofertas personalizadas\n\u2022 Reforzar cierre con beneficios y urgencia"
+  }
+]

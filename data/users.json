@@ -1,0 +1,22 @@
+{
+  "admin": {
+    "password": "dac7cd784fda2560d270c2cc0066edface31661fccb3aec62ecc875b4a35b96f84a24bc29e54ebd194da7d44ebb67dc3c348950ec045215a4e98ae9faf6fd31a",
+    "nombre": "Administrador",
+    "created_at": "2026-05-25 16:29:04.696032"
+  },
+  "demo": {
+    "password": "175bcf2f7ba4fddfb006db3858b0bf698e2d05ac7f0dce1c8a34dc2fe68508d7b613f7d68ff6534dec09bd49ec6da30a8be421e247a0d9a939f8bc15e8310f6b",
+    "nombre": "Usuario Demo",
+    "created_at": "2026-05-25 16:29:04.720878"
+  },
+  "beta": {
+    "password": "bd1fd918b59c628f22cdb699934800c690ae0d63c133dcbcc9f17da0b967a09be4f32bfd9909a63e6d3248c4fd7cf64a11f8cfda594801b3ac1e9311351c7f90",
+    "nombre": "hola",
+    "created_at": "2026-05-25 16:43:52.031601"
+  },
+  "hola": {
+    "password": "c73cd22e56e037db5569c700ecf74850ce6ced2136af66cb4fa6507e482c3f42004bbe40d242dc06fe64b1d08e757541df1335fd5f8671da276dba65f4a1b164",
+    "nombre": "hola",
+    "created_at": "2026-05-25 18:21:37.756454"
+  }
+}
