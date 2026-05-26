@@ -172,7 +172,7 @@ def login_page():
 
 # ─── Footer ────────────────────────────────────────────────────────────────
 st.markdown(
-    '<p style="text-align:center;color:#9E9E9E;font-size:13px;padding-top:16px;">🏪 RYR Variedades y Servicios</p>',
+    '<p style="text-align:center;color:#9E9E9E;font-size:13px;padding-top:16px;">🏪 De RYR Variedades y Servicios Para Capitalizarme 🐹</p>',
     unsafe_allow_html=True
 )
 
@@ -212,7 +212,7 @@ def render_sidebar():
 
             # Footer en sidebar
             st.markdown(
-                '<p style="text-align:center;color:#9E9E9E;font-size:12px;padding-top:24px;">🏪 RYR Variedades y Servicios</p>',
+                '<p style="text-align:center;color:#9E9E9E;font-size:12px;padding-top:24px;">🏪 De RYR Variedades y Servicios Para Capitalizarme 🐹</p>',
                 unsafe_allow_html=True
             )
 
