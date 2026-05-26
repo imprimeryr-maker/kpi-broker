@@ -8,7 +8,8 @@ from datetime import date
 from storage import load_carga_diaria, load_metas
 from utils import (
     tasa_a_porcentaje, formatear_pesos, formatear_uf,
-    generar_diagnostico, generar_plan_accion, render_ad_banner
+    generar_diagnostico, generar_plan_accion, render_ad_banner,
+    generar_excel_report
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -20,6 +21,18 @@ username = user["username"]
 nombre = user.get("nombre", username)
 
 st.markdown(f"# 📊 Dashboard Diario — {nombre}")
+
+# ─── Botón descargar Excel ────────────────────────────────────────────
+col_title, col_btn = st.columns([3, 1])
+with col_btn:
+    excel_bytes = generar_excel_report(username)
+    st.download_button(
+        label="📥 Descargar Excel",
+        data=excel_bytes,
+        file_name=f"informe_kpis_{username}.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True,
+    )
 
 entries = load_carga_diaria(username)
 metas = load_metas(username)

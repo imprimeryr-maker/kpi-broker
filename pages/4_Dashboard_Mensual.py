@@ -7,7 +7,7 @@ import streamlit as st
 from storage import load_carga_diaria, load_metas
 from utils import (
     agregar_mensual, tasa_a_porcentaje, formatear_pesos, formatear_uf,
-    render_ad_banner
+    render_ad_banner, generar_excel_report
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -20,6 +20,16 @@ nombre = user.get("nombre", username)
 
 st.markdown(f"# 📅 Dashboard Mensual — {nombre}")
 st.markdown("<p style='color:#9E9E9E;'>Resumen mensual de indicadores y tendencias.</p>", unsafe_allow_html=True)
+
+# ─── Botón descargar Excel ────────────────────────────────────────────
+excel_bytes = generar_excel_report(username)
+st.download_button(
+    label="📥 Descargar Excel",
+    data=excel_bytes,
+    file_name=f"informe_kpis_{username}.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    use_container_width=True,
+)
 
 entries = load_carga_diaria(username)
 metas = load_metas(username)

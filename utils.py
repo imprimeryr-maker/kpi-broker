@@ -335,6 +335,119 @@ def agregar_mensual(entries: list) -> list:
     result.sort(key=lambda x: x["mes_numero"])
     return result
 
+# ─── Exportar a Excel ───────────────────────────────────────────────────
+
+def generar_excel_report(username: str) -> bytes:
+    """
+    Generate an Excel report with 3 sheets: Diario, Semanal, Mensual.
+    Returns the Excel file as bytes.
+    """
+    import pandas as pd
+    from io import BytesIO
+    from storage import load_carga_diaria, load_metas
+
+    entries = load_carga_diaria(username)
+
+    output = BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        # ─── Sheet 1: Diario ──────────────────────────────────────────
+        if entries:
+            # Ensure all calculated fields exist
+            metas = load_metas(username)
+            precio_uf = metas.get("precio_uf", 24000)
+            processed = []
+            for e in entries:
+                e = calcular_tasas(e)
+                e["ingreso_bruto"] = calcular_ingreso(e, precio_uf)
+                processed.append(e)
+
+            daily_cols = [
+                "fecha", "dia", "semana",
+                "leads_nuevos", "llamadas", "contactos",
+                "tasa_contacto", "agendas", "tasa_agendamiento",
+                "reuniones", "tasa_show", "reservas", "tasa_reserva",
+                "ventas", "tasa_cierre",
+                "uf_vendidas", "ingreso_bruto",
+                "observaciones", "accion_correctiva",
+            ]
+            df_daily = pd.DataFrame(processed)
+            # Keep only columns that exist
+            df_daily = df_daily[[c for c in daily_cols if c in df_daily.columns]]
+            # Format rates as percentages
+            rate_cols = ["tasa_contacto", "tasa_agendamiento", "tasa_show", "tasa_reserva", "tasa_cierre"]
+            for col in rate_cols:
+                if col in df_daily.columns:
+                    df_daily[col] = df_daily[col].apply(lambda x: f"{x*100:.1f}%" if x else "0.0%")
+            # Format ingreso_bruto as currency
+            if "ingreso_bruto" in df_daily.columns:
+                df_daily["ingreso_bruto"] = df_daily["ingreso_bruto"].apply(
+                    lambda x: f"${x:,.0f}" if x else "$0"
+                )
+            df_daily.to_excel(writer, sheet_name="Diario", index=False)
+        else:
+            pd.DataFrame({"Mensaje": ["No hay datos diarios cargados."]}).to_excel(
+                writer, sheet_name="Diario", index=False
+            )
+
+        # ─── Sheet 2: Semanal ─────────────────────────────────────────
+        if entries:
+            weekly = agregar_semanal(entries)
+            weekly_cols = [
+                "semana", "dias",
+                "leads_nuevos", "llamadas", "contactos", "agendas",
+                "reuniones", "reservas", "ventas",
+                "uf_vendidas", "ingreso_bruto",
+                "tasa_contacto", "tasa_agendamiento", "tasa_show",
+                "tasa_reserva", "tasa_cierre",
+            ]
+            df_weekly = pd.DataFrame(weekly)
+            df_weekly = df_weekly[[c for c in weekly_cols if c in df_weekly.columns]]
+            rate_cols = ["tasa_contacto", "tasa_agendamiento", "tasa_show", "tasa_reserva", "tasa_cierre"]
+            for col in rate_cols:
+                if col in df_weekly.columns:
+                    df_weekly[col] = df_weekly[col].apply(lambda x: f"{x*100:.1f}%" if x else "0.0%")
+            if "ingreso_bruto" in df_weekly.columns:
+                df_weekly["ingreso_bruto"] = df_weekly["ingreso_bruto"].apply(
+                    lambda x: f"${x:,.0f}" if x else "$0"
+                )
+            df_weekly.to_excel(writer, sheet_name="Semanal", index=False)
+        else:
+            pd.DataFrame({"Mensaje": ["No hay datos semanales disponibles."]}).to_excel(
+                writer, sheet_name="Semanal", index=False
+            )
+
+        # ─── Sheet 3: Mensual ─────────────────────────────────────────
+        if entries:
+            monthly = agregar_mensual(entries)
+            monthly_cols = [
+                "mes_nombre", "mes_numero", "dias",
+                "leads_nuevos", "llamadas", "contactos", "agendas",
+                "reuniones", "reservas", "ventas",
+                "uf_vendidas", "ingreso_bruto",
+                "tasa_contacto", "tasa_agendamiento", "tasa_show",
+                "tasa_reserva", "tasa_cierre",
+            ]
+            df_monthly = pd.DataFrame(monthly)
+            df_monthly = df_monthly[[c for c in monthly_cols if c in df_monthly.columns]]
+            rate_cols = ["tasa_contacto", "tasa_agendamiento", "tasa_show", "tasa_reserva", "tasa_cierre"]
+            for col in rate_cols:
+                if col in df_monthly.columns:
+                    df_monthly[col] = df_monthly[col].apply(lambda x: f"{x*100:.1f}%" if x else "0.0%")
+            if "ingreso_bruto" in df_monthly.columns:
+                df_monthly["ingreso_bruto"] = df_monthly["ingreso_bruto"].apply(
+                    lambda x: f"${x:,.0f}" if x else "$0"
+                )
+            df_monthly.to_excel(writer, sheet_name="Mensual", index=False)
+        else:
+            pd.DataFrame({"Mensaje": ["No hay datos mensuales disponibles."]}).to_excel(
+                writer, sheet_name="Mensual", index=False
+            )
+
+    output.seek(0)
+    return output.read()
+
+
 # ─── Formateo ─────────────────────────────────────────────────────────
 
 def formatear_numero(valor, decimales: int = 0) -> str:
