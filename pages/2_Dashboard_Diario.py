@@ -80,22 +80,22 @@ def metric_card(label, valor, meta, formato="tasa", unidad=""):
         pct = (valor / meta) * 100
         if pct >= 100:
             status = "green"
-            icon = "✅"
+            color = "#4CAF50"
         elif pct >= 80:
             status = "orange"
-            icon = "⚠️"
+            color = "#FF9800"
         else:
             status = "red"
-            icon = "❌"
+            color = "#EF5350"
     else:
-        status = "orange"
-        icon = "➖"
+        status = "neutral"
+        color = "#9E9E9E"
         pct = 0
 
     st.markdown(f"""
     <div class="metric-card {status}">
-        <div class="metric-label">{icon} {label}</div>
-        <div class="metric-value">{val_str}</div>
+        <div class="metric-label">{label}</div>
+        <div class="metric-value" style="color:{color}">{val_str}</div>
         <div style="font-size:13px;color:#9E9E9E;">Meta: {meta_str} · {pct:.0f}%</div>
     </div>
     """, unsafe_allow_html=True)

@@ -34,6 +34,23 @@ if not monthly:
     st.warning("⚠️ No se pudieron agregar datos mensuales.")
     st.stop()
 
+# ─── Detalle por Mes (al inicio) ────────────────────────────────────
+st.markdown("### 📋 Detalle por Mes")
+
+monthly_reversed = list(reversed(monthly))
+
+for m in monthly_reversed:
+    with st.expander(f"📅 {m['mes_nombre']} — {m['dias']} días"):
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown(f"**🏢 Reuniones:** {m['reuniones']}")
+            st.markdown(f"**✅ Reservas:** {m['reservas']}")
+            st.markdown(f"**🏆 Ventas:** {m['ventas']}")
+        with col2:
+            st.markdown(f"**💰 UF Vendidas:** {m['uf_vendidas']:,.1f}")
+            st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(m.get('tasa_cierre', 0))}")
+            st.markdown(f"**💵 Ingreso:** ${m.get('ingreso_bruto', 0):,.0f}")
+
 # ─── Resumen mensual ──────────────────────────────────────────────────
 st.markdown("### 📊 Resumen Mensual")
 
@@ -171,30 +188,6 @@ tasas_fig.update_xaxes(gridcolor="#333")
 tasas_fig.update_yaxes(gridcolor="#333", ticksuffix="%")
 
 st.plotly_chart(tasas_fig, use_container_width=True)
-
-# ─── Detalle por mes ──────────────────────────────────────────────────
-st.markdown("### 📋 Detalle por Mes")
-
-monthly_reversed = list(reversed(monthly))
-
-for m in monthly_reversed:
-    with st.expander(f"📅 {m['mes_nombre']} — {m['dias']} días"):
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.markdown(f"**👥 Leads:** {m['leads_nuevos']}")
-            st.markdown(f"**📞 Llamadas:** {m['llamadas']}")
-            st.markdown(f"**🤝 Contactos:** {m['contactos']}")
-            st.markdown(f"**📅 Agendas:** {m['agendas']}")
-        with col2:
-            st.markdown(f"**🏢 Reuniones:** {m['reuniones']}")
-            st.markdown(f"**✅ Reservas:** {m['reservas']}")
-            st.markdown(f"**🏆 Ventas:** {m['ventas']}")
-            st.markdown(f"**💰 UF:** {m['uf_vendidas']:,.1f}")
-        with col3:
-            st.markdown(f"**📞 T. Contacto:** {tasa_a_porcentaje(m.get('tasa_contacto', 0))}")
-            st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(m.get('tasa_agendamiento', 0))}")
-            st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(m.get('tasa_cierre', 0))}")
-            st.markdown(f"**💵 Ingreso:** ${m.get('ingreso_bruto', 0):,.0f}")
 
 # ─── Ad Banner ────────────────────────────────────────────────────────────
 render_ad_banner()

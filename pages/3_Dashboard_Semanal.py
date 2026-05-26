@@ -34,6 +34,30 @@ if not weekly:
     st.warning("⚠️ No se pudieron agregar datos semanales. Revisa que los registros tengan semana asignada.")
     st.stop()
 
+# ─── Detalle Semanal (al inicio) ────────────────────────────────────
+st.markdown("### 📋 Detalle Semanal")
+
+weekly_reversed = list(reversed(weekly))
+
+for w in weekly_reversed:
+    with st.expander(f"📅 {w['semana']} — {w['dias']} días"):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(f"**👥 Leads:** {w['leads_nuevos']}")
+            st.markdown(f"**📞 Llamadas:** {w['llamadas']}")
+            st.markdown(f"**🤝 Contactos:** {w['contactos']}")
+            st.markdown(f"**📅 Agendas:** {w['agendas']}")
+        with col2:
+            st.markdown(f"**🏢 Reuniones:** {w['reuniones']}")
+            st.markdown(f"**✅ Reservas:** {w['reservas']}")
+            st.markdown(f"**🏆 Ventas:** {w['ventas']}")
+            st.markdown(f"**💰 UF:** {w['uf_vendidas']:,.1f}")
+        with col3:
+            st.markdown(f"**📞 T. Contacto:** {tasa_a_porcentaje(w.get('tasa_contacto', 0))}")
+            st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(w.get('tasa_agendamiento', 0))}")
+            st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(w.get('tasa_cierre', 0))}")
+            st.markdown(f"**💵 Ingreso:** ${w.get('ingreso_bruto', 0):,.0f}")
+
 # ─── Métricas acumuladas ──────────────────────────────────────────────
 total_leads = sum(w.get("leads_nuevos", 0) for w in weekly)
 total_ventas = sum(w.get("ventas", 0) for w in weekly)
@@ -153,31 +177,6 @@ tasas_fig.update_xaxes(gridcolor="#333")
 tasas_fig.update_yaxes(gridcolor="#333", ticksuffix="%")
 
 st.plotly_chart(tasas_fig, use_container_width=True)
-
-# ─── Tabla semanal detallada ──────────────────────────────────────────
-st.markdown("### 📋 Detalle Semanal")
-
-# Mostrar última semana primero
-weekly_reversed = list(reversed(weekly))
-
-for w in weekly_reversed:
-    with st.expander(f"📅 {w['semana']} — {w['dias']} días"):
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.markdown(f"**👥 Leads:** {w['leads_nuevos']}")
-            st.markdown(f"**📞 Llamadas:** {w['llamadas']}")
-            st.markdown(f"**🤝 Contactos:** {w['contactos']}")
-            st.markdown(f"**📅 Agendas:** {w['agendas']}")
-        with col2:
-            st.markdown(f"**🏢 Reuniones:** {w['reuniones']}")
-            st.markdown(f"**✅ Reservas:** {w['reservas']}")
-            st.markdown(f"**🏆 Ventas:** {w['ventas']}")
-            st.markdown(f"**💰 UF:** {w['uf_vendidas']:,.1f}")
-        with col3:
-            st.markdown(f"**📞 T. Contacto:** {tasa_a_porcentaje(w.get('tasa_contacto', 0))}")
-            st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(w.get('tasa_agendamiento', 0))}")
-            st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(w.get('tasa_cierre', 0))}")
-            st.markdown(f"**💵 Ingreso:** ${w.get('ingreso_bruto', 0):,.0f}")
 
 # ─── Ad Banner ────────────────────────────────────────────────────────────
 render_ad_banner()
