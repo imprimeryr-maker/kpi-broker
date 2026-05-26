@@ -5,7 +5,7 @@ Permite a cada usuario ajustar sus propios objetivos
 
 import streamlit as st
 from storage import load_metas, save_metas
-from utils import formatear_pesos, render_ad_banner
+from utils import formatear_pesos
 
 # ─── Auth guard ────────────────────────────────────────────────────────
 if "user" not in st.session_state or st.session_state.user is None:
@@ -137,5 +137,3 @@ with col3:
     st.metric("📊 UF Promedio/Venta", f"{metas_actuales['uf_promedio_venta']:,.1f}")
     st.metric("💵 Precio UF", formatear_pesos(metas_actuales['precio_uf']))
 
-# ─── Ad Banner ────────────────────────────────────────────────────────────
-render_ad_banner()

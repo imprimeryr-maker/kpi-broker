@@ -170,6 +170,12 @@ def login_page():
     st.markdown('<p style="text-align:center;color:#9E9E9E;font-size:13px;padding-top:16px;">¿No tienes cuenta? Crea una gratis desde el botón "Crear Cuenta".</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
+# ─── Footer ────────────────────────────────────────────────────────────────
+st.markdown(
+    '<p style="text-align:center;color:#9E9E9E;font-size:13px;padding-top:16px;">🏪 RYR Variedades y Servicios</p>',
+    unsafe_allow_html=True
+)
+
 
 # ─── Sidebar de navegación ────────────────────────────────────────────
 def render_sidebar():
@@ -203,6 +209,12 @@ def render_sidebar():
                 st.session_state.user = None
                 st.session_state.logged_out = True
                 st.rerun()
+
+            # Footer en sidebar
+            st.markdown(
+                '<p style="text-align:center;color:#9E9E9E;font-size:12px;padding-top:24px;">🏪 RYR Variedades y Servicios</p>',
+                unsafe_allow_html=True
+            )
 
 
 # ─── Página principal (después del login) ─────────────────────────────

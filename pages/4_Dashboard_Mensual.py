@@ -7,7 +7,7 @@ import streamlit as st
 from storage import load_carga_diaria, load_metas
 from utils import (
     agregar_mensual, tasa_a_porcentaje, formatear_pesos, formatear_uf,
-    render_ad_banner, generar_excel_report
+    generar_excel_report
 )
 
 # ─── Auth guard ────────────────────────────────────────────────────────
@@ -199,5 +199,3 @@ tasas_fig.update_yaxes(gridcolor="#333", ticksuffix="%")
 
 st.plotly_chart(tasas_fig, use_container_width=True)
 
-# ─── Ad Banner ────────────────────────────────────────────────────────────
-render_ad_banner()
