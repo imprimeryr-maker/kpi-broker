@@ -87,8 +87,7 @@ with tab1:
         with col2:
             uf_vendidas = st.number_input("💰 UF Vendidas",
                 min_value=0.0, value=float(existing.get("uf_vendidas", 0.0)) if existing else 0.0, step=0.1, format="%.1f")
-        with col3:
-            st.markdown(f"<div style='padding-top:28px;'><b>💵 Precio UF:</b> ${metas.get('precio_uf', 24000):,.0f}</div>", unsafe_allow_html=True)
+
 
         # ─── Observaciones ──────────────────────────────────────────────
         st.markdown("#### 📝 Notas")
