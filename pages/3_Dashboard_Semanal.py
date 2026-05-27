@@ -56,15 +56,15 @@ for w in weekly_reversed:
             st.markdown(f"**👥 Leads:** {w['leads_nuevos']}")
             st.markdown(f"**📞 Llamadas:** {w['llamadas']}")
             st.markdown(f"**🤝 Contactos:** {w['contactos']}")
-            st.markdown(f"**📅 Agendas:** {w['agendas']}")
+            st.markdown(f"**📅 Reuniones Agendadas:** {w['agendas']}")
         with col2:
-            st.markdown(f"**🏢 Reuniones:** {w['reuniones']}")
+            st.markdown(f"**🏢 Reuniones Efectuadas:** {w['reuniones']}")
             st.markdown(f"**✅ Reservas:** {w['reservas']}")
             st.markdown(f"**🏆 Ventas:** {w['ventas']}")
             st.markdown(f"**💰 UF:** {w['uf_vendidas']:,.1f}")
         with col3:
             st.markdown(f"**📞 T. Contacto:** {tasa_a_porcentaje(w.get('tasa_contacto', 0))}")
-            st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(w.get('tasa_agendamiento', 0))}")
+            st.markdown(f"**📅 T. Agendamiento:** {tasa_a_porcentaje(w.get('tasa_agendamiento', 0))}")
             st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(w.get('tasa_cierre', 0))}")
             st.markdown(f"**💵 Ingreso:** ${w.get('ingreso_bruto', 0):,.0f}")
 

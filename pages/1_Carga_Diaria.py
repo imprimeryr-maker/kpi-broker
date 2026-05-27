@@ -71,11 +71,13 @@ with tab1:
 
         col1, col2, col3 = st.columns(3)
         with col1:
-            agendas = st.number_input("📅 Agendas Logradas",
-                min_value=0, value=existing.get("agendas", 0) if existing else 0, step=1)
+            agendas = st.number_input("📅 Reuniones Agendadas",
+                min_value=0, value=existing.get("agendas", 0) if existing else 0, step=1,
+                help="Agendas programadas para el día")
         with col2:
-            reuniones = st.number_input("🏢 Reuniones Realizadas",
-                min_value=0, value=existing.get("reuniones", 0) if existing else 0, step=1)
+            reuniones = st.number_input("🏢 Reuniones Efectuadas",
+                min_value=0, value=existing.get("reuniones", 0) if existing else 0, step=1,
+                help="Reuniones que realmente se efectuaron")
         with col3:
             reservas = st.number_input("✅ Reservas",
                 min_value=0, value=existing.get("reservas", 0) if existing else 0, step=1)
@@ -144,7 +146,7 @@ with tab1:
                 st.metric("📞 Tasa Contacto", tasa_a_porcentaje(entry["tasa_contacto"]),
                          delta=None, delta_color="normal")
                 st.metric("📅 Tasa Agendamiento", tasa_a_porcentaje(entry["tasa_agendamiento"]))
-                st.metric("🏢 Tasa de Show", tasa_a_porcentaje(entry["tasa_show"]))
+                st.metric("🏢 Tasa de Efectividad", tasa_a_porcentaje(entry["tasa_show"]))
             with col2:
                 st.metric("✅ Tasa de Reserva", tasa_a_porcentaje(entry["tasa_reserva"]))
                 st.metric("🏆 Tasa de Cierre", tasa_a_porcentaje(entry["tasa_cierre"]))
@@ -183,15 +185,15 @@ with tab2:
                     st.markdown(f"**👥 Leads:** {e.get('leads_nuevos', 0)}")
                     st.markdown(f"**📞 Llamadas:** {e.get('llamadas', 0)}")
                     st.markdown(f"**🤝 Contactos:** {e.get('contactos', 0)}")
-                    st.markdown(f"**📅 Agendas:** {e.get('agendas', 0)}")
+                    st.markdown(f"**📅 Reuniones Agendadas:** {e.get('agendas', 0)}")
                 with col2:
-                    st.markdown(f"**🏢 Reuniones:** {e.get('reuniones', 0)}")
+                    st.markdown(f"**🏢 Reuniones Efectuadas:** {e.get('reuniones', 0)}")
                     st.markdown(f"**✅ Reservas:** {e.get('reservas', 0)}")
                     st.markdown(f"**🏆 Ventas:** {e.get('ventas', 0)}")
                     st.markdown(f"**💰 UF:** {e.get('uf_vendidas', 0):,.1f}")
                 with col3:
                     st.markdown(f"**📞 T. Contacto:** {tasa_a_porcentaje(e.get('tasa_contacto', 0))}")
-                    st.markdown(f"**📅 T. Agenda:** {tasa_a_porcentaje(e.get('tasa_agendamiento', 0))}")
+                    st.markdown(f"**📅 T. Agendamiento:** {tasa_a_porcentaje(e.get('tasa_agendamiento', 0))}")
                     st.markdown(f"**🏆 T. Cierre:** {tasa_a_porcentaje(e.get('tasa_cierre', 0))}")
                     st.markdown(f"**💵 Ingreso:** ${e.get('ingreso_bruto', 0):,.0f}")
 

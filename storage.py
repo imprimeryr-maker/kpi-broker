@@ -37,6 +37,8 @@ def get_default_metas() -> dict:
         "uf_promedio_venta": 3500.0,  # UF
         "precio_uf": 24000.0,         # CLP
         "meta_diaria_leads": 0,       # 0 = dinámico
+        "meta_reuniones_agendadas": 5,   # reuniones agendadas por día
+        "meta_reuniones_efectuadas": 3,  # reuniones efectuadas por día
     }
 
 def _backup_corrupted(path: Path):

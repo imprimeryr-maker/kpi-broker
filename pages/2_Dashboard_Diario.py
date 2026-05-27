@@ -120,7 +120,7 @@ with col1:
                 e.get("tasa_contacto", 0), metas["tasa_contacto"])
     metric_card("📅 Tasa de Agendamiento",
                 e.get("tasa_agendamiento", 0), metas["tasa_agendamiento"])
-    metric_card("🏢 Tasa de Show",
+    metric_card("🏢 Tasa Efectividad",
                 e.get("tasa_show", 0), metas["tasa_show"])
 
 with col2:
@@ -132,16 +132,50 @@ with col2:
                 e.get("uf_vendidas", 0), metas["uf_promedio_venta"], formato="uf")
 
 with col3:
+    # ─── Meta de Reuniones Agendadas ───────────────────────────────────
+    meta_agend = metas.get("meta_reuniones_agendadas", 5)
+    val_agend = e.get("agendas", 0) or 0
+    if meta_agend > 0:
+        pct_agend = (val_agend / meta_agend) * 100
+        color_agend = "#4CAF50" if pct_agend >= 100 else ("#FF9800" if pct_agend >= 80 else "#EF5350")
+        status_agend = "green" if pct_agend >= 100 else ("orange" if pct_agend >= 80 else "red")
+    else:
+        pct_agend = 0
+        color_agend = "#9E9E9E"
+        status_agend = "neutral"
+
+    # ─── Meta de Reuniones Efectuadas ─────────────────────────────────
+    meta_efect = metas.get("meta_reuniones_efectuadas", 3)
+    val_efect = e.get("reuniones", 0) or 0
+    if meta_efect > 0:
+        pct_efect = (val_efect / meta_efect) * 100
+        color_efect = "#4CAF50" if pct_efect >= 100 else ("#FF9800" if pct_efect >= 80 else "#EF5350")
+        status_efect = "green" if pct_efect >= 100 else ("orange" if pct_efect >= 80 else "red")
+    else:
+        pct_efect = 0
+        color_efect = "#9E9E9E"
+        status_efect = "neutral"
+
     st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">👥 Leads</div>
-        <div class="metric-value">{e.get('leads_nuevos', 0)}</div>
-        <div style="font-size:13px;color:#9E9E9E;">Llamadas: {e.get('llamadas', 0)}</div>
+    <div class="metric-card {status_agend}">
+        <div class="metric-label">📅 Reuniones Agendadas</div>
+        <div class="metric-value" style="color:{color_agend}">{val_agend}</div>
+        <div style="font-size:13px;color:#9E9E9E;">Meta: {meta_agend} · {pct_agend:.0f}%</div>
+    </div>
+    <div class="metric-card {status_efect}">
+        <div class="metric-label">🏢 Reuniones Efectuadas</div>
+        <div class="metric-value" style="color:{color_efect}">{val_efect}</div>
+        <div style="font-size:13px;color:#9E9E9E;">Meta: {meta_efect} · {pct_efect:.0f}%</div>
     </div>
     <div class="metric-card">
-        <div class="metric-label">🤝 Contactos Efectivos</div>
-        <div class="metric-value">{e.get('contactos', 0)}</div>
-        <div style="font-size:13px;color:#9E9E9E;">Agendas: {e.get('agendas', 0)}</div>
+        <div class="metric-label">👥 Leads / Llamadas</div>
+        <div class="metric-value">{e.get('leads_nuevos', 0)} / {e.get('llamadas', 0)}</div>
+        <div style="font-size:13px;color:#9E9E9E;">Contactos: {e.get('contactos', 0)}</div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-label">✅ Reservas / Ventas</div>
+        <div class="metric-value">{e.get('reservas', 0)} / {e.get('ventas', 0)}</div>
+        <div style="font-size:13px;color:#9E9E9E;">UF: {formatear_uf(e.get('uf_vendidas', 0))}</div>
     </div>
     <div class="metric-card {'green' if (e.get('ingreso_bruto', 0) or 0) > 0 else ''}">
         <div class="metric-label">💵 Ingreso Bruto Estimado</div>
@@ -172,8 +206,8 @@ if (e.get("leads_nuevos", 0) or 0) > 0:
         ("👥 Leads", e.get("leads_nuevos", 0)),
         ("📞 Llamadas", e.get("llamadas", 0)),
         ("🤝 Contactos", e.get("contactos", 0)),
-        ("📅 Agendas", e.get("agendas", 0)),
-        ("🏢 Reuniones", e.get("reuniones", 0)),
+        ("📅 Reuniones Agendadas", e.get("agendas", 0)),
+        ("🏢 Reuniones Efectuadas", e.get("reuniones", 0)),
         ("✅ Reservas", e.get("reservas", 0)),
         ("🏆 Ventas", e.get("ventas", 0)),
     ]

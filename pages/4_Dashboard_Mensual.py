@@ -53,7 +53,7 @@ for m in monthly_reversed:
     with st.expander(f"📅 {m['mes_nombre']} — {m['dias']} días"):
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(f"**🏢 Reuniones:** {m['reuniones']}")
+            st.markdown(f"**🏢 Reuniones Efectuadas:** {m['reuniones']}")
             st.markdown(f"**✅ Reservas:** {m['reservas']}")
             st.markdown(f"**🏆 Ventas:** {m['ventas']}")
         with col2:

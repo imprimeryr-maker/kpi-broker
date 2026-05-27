@@ -46,13 +46,13 @@ with st.form("config_metas_form"):
             min_value=0.0, max_value=100.0,
             value=float(metas.get("tasa_agendamiento", 0.15) * 100),
             step=1.0, format="%.1f",
-            help="% de contactos que resultan en agenda")
+            help="% de contactos que resultan en reunión agendada")
     with col3:
-        ts = st.number_input("🏢 Tasa de Show (%)",
+        ts = st.number_input("🏢 Tasa de Efectividad (%)",
             min_value=0.0, max_value=100.0,
             value=float(metas.get("tasa_show", 0.10) * 100),
             step=1.0, format="%.1f",
-            help="% de agendas que se convierten en reuniones")
+            help="% de reuniones agendadas que realmente se efectúan")
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -73,6 +73,26 @@ with st.form("config_metas_form"):
             value=float(metas.get("cobertura_llamados", 1.0) * 100),
             step=5.0, format="%.0f",
             help="% de leads que deben ser llamados")
+
+    st.divider()
+    st.markdown("#### 🎯 Metas de Reuniones")
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        meta_reu_agend = st.number_input("📅 Reuniones Agendadas por Día",
+            min_value=0,
+            value=int(metas.get("meta_reuniones_agendadas", 5)),
+            step=1, format="%d",
+            help="Cuántas reuniones deberías agendar cada día")
+    with col2:
+        meta_reu_efect = st.number_input("🏢 Reuniones Efectuadas por Día",
+            min_value=0,
+            value=int(metas.get("meta_reuniones_efectuadas", 3)),
+            step=1, format="%d",
+            help="Cuántas reuniones deberías efectivamente realizar cada día")
+    with col3:
+        st.markdown("<div style='padding-top:28px;'></div>", unsafe_allow_html=True)
+        st.caption("📌 Las reuniones agendadas son las que programas; las efectuadas son las que realmente ocurren.")
 
     st.divider()
     st.markdown("#### 💰 Metas Comerciales")
@@ -113,6 +133,8 @@ if saved:
         "uf_vendidas_semana": uf_sem,
         "uf_promedio_venta": uf_prom,
         "precio_uf": precio_uf,
+        "meta_reuniones_agendadas": meta_reu_agend,
+        "meta_reuniones_efectuadas": meta_reu_efect,
     })
     save_metas(username, metas)
     st.success("✅ Metas guardadas exitosamente.")
@@ -127,7 +149,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.metric("📞 Tasa Contacto", f"{metas_actuales['tasa_contacto']:.0%}")
     st.metric("📅 Tasa Agendamiento", f"{metas_actuales['tasa_agendamiento']:.0%}")
-    st.metric("🏢 Tasa de Show", f"{metas_actuales['tasa_show']:.0%}")
+    st.metric("🏢 Tasa Efectividad", f"{metas_actuales['tasa_show']:.0%}")
 with col2:
     st.metric("✅ Tasa de Reserva", f"{metas_actuales['tasa_reserva']:.0%}")
     st.metric("🏆 Tasa de Cierre", f"{metas_actuales['tasa_cierre']:.0%}")
@@ -136,4 +158,13 @@ with col3:
     st.metric("💰 UF/Semana", f"{metas_actuales['uf_vendidas_semana']:,.1f}")
     st.metric("📊 UF Promedio/Venta", f"{metas_actuales['uf_promedio_venta']:,.1f}")
     st.metric("💵 Precio UF", formatear_pesos(metas_actuales['precio_uf']))
+
+st.markdown("#### 📅 Metas de Reuniones")
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("📅 Reuniones Agendadas/Día", f"{metas_actuales.get('meta_reuniones_agendadas', 5)}")
+with col2:
+    st.metric("🏢 Reuniones Efectuadas/Día", f"{metas_actuales.get('meta_reuniones_efectuadas', 3)}")
+with col3:
+    st.metric("📊 Tasa Efectividad", f"{metas_actuales['tasa_show']:.0%}")
 

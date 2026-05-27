@@ -124,7 +124,7 @@ def generar_diagnostico(entry: dict, metas: dict) -> str:
     checks = [
         ("tasa_contacto", "📞 Contacto", metas.get("tasa_contacto", 0.5)),
         ("tasa_agendamiento", "📅 Agendamiento", metas.get("tasa_agendamiento", 0.15)),
-        ("tasa_show", "🏢 Show", metas.get("tasa_show", 0.10)),
+        ("tasa_show", "🏢 Efectividad", metas.get("tasa_show", 0.10)),
         ("tasa_reserva", "✅ Reserva", metas.get("tasa_reserva", 0.70)),
         ("tasa_cierre", "🏆 Cierre", metas.get("tasa_cierre", 0.70)),
     ]
@@ -186,7 +186,7 @@ def generar_plan_accion(entry: dict, metas: dict) -> str:
         ("tasa_agendamiento", metas.get("tasa_agendamiento", 0.15),
          "Reforzar propuesta de valor y beneficio de la reunión"),
         ("tasa_show", metas.get("tasa_show", 0.10),
-         "Calificar mejor las agendas antes de agendar"),
+         "Calificar mejor las reuniones agendadas antes de confirmar"),
         ("tasa_reserva", metas.get("tasa_reserva", 0.70),
          "Seguimiento post-reunión con ofertas personalizadas"),
         ("tasa_cierre", metas.get("tasa_cierre", 0.70),
